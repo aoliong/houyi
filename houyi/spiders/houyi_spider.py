@@ -18,6 +18,15 @@ class Spider123(CrawlSpider):
             Rule(LinkExtractor(), callback='parse_item'),
     )
 
+    def parse_start_url(self, response):
+        self.logger.info('start url')
+        for sel in response.xpath('//div[@class="product_m"]/h2/a/@href'):
+            url = sel.extract()
+            self.logger.info('url: %s ' % url)
+            item = HouyiItem()
+            item['body'] = url
+            yield self.make_requests_from_url(url)
+
     def parse_item(self, response):
         # http://vacations.ctrip.com/tour/detail/p19489584r2001.html
         # //div[@class="product_feature"]/span/p/span/text()
@@ -26,10 +35,12 @@ class Spider123(CrawlSpider):
 
         self.logger.info('****hello')
         self.logger.info('Hi, this is an item page! %s' % response.url)
+        # self.logger.info('text : %s' % response.xpath('//div[@class="product_feature"]/span/p/span/text()'))
 
-        for sel in response.xpath('//div[@class="product_feature"]/span/p/span/text()'):
+        for sel in response.xpath('//div[@class="product_feature"]/p/span/text()'):
             item = HouyiItem()
-            item['body'] = sel.extract()
+            body = sel.extract()
+            item['body'] = body.encode('utf8')
             self.logger.info('body is: %s' % item['body'])
             yield item
             # print sel.extract()
