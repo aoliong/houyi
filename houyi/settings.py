@@ -62,7 +62,7 @@ NEWSPIDER_MODULE = 'houyi.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'houyi.pipelines.SomePipeline': 300,
+    'houyi.pipelines.HouyiPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

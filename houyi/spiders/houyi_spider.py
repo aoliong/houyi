@@ -40,7 +40,7 @@ class Spider123(CrawlSpider):
         for sel in response.xpath('//div[@class="product_feature"]/p/span/text()'):
             item = HouyiItem()
             body = sel.extract()
-            item['body'] = body.encode('utf8')
+            item['body'] = body
             self.logger.info('body is: %s' % item['body'])
             yield item
             # print sel.extract()
