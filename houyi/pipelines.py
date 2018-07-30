@@ -15,7 +15,7 @@ class HouyiPipeline(object):
             os.remove(self.filename)
 
     def process_item(self, item, spider):
-        print '****item: %s' % item
+        # print '****item: %s' % item
         data = json.dumps(dict(item)) + '\n'
         with codecs.open(self.filename, 'a', encoding='utf-8') as f:
             f.write(data.decode('unicode_escape'))
