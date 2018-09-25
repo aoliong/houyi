@@ -22,8 +22,12 @@ class Spider123(CrawlSpider):
             Rule(LinkExtractor(), callback='parse_item'),
     )
 
+    def __init__(self, *a, **kw):
+        super(Spider123, self).__init__(*a, **kw)
+        self.logger.info('Crawl ctrip...')
+
     def parse_start_url(self, response):
-        # self.logger.info('start url')
+        self.logger.info('type:%s' % type(response))
         # 找出所有景点的URL
         count = 0
         for sel in response.xpath('//div[@class="product_m"]/h2/a/@href'):
@@ -33,6 +37,7 @@ class Spider123(CrawlSpider):
                 item['body'] = url
                 r = self.make_requests_from_url(url)
                 self.logger.info('url:%s' % url)
+                return r
             count += 1
 
         # 找出所有URL
